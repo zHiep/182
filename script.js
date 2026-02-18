@@ -13,7 +13,7 @@ const loadingText = document.getElementById('loading-text');
 
 // State
 let dodgeCount = 0;
-const maxDodges = 5;
+const maxDodges = 8;
 let hasFailedLoadingOnce = false;
 
 // Audio Context for generated sounds (No 404s!)
