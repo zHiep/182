@@ -1,11 +1,19 @@
 /* Global Styles */
+html,
+body {
+    margin: 0;
+    padding: 0;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    /* Strict overflow hidden */
+}
+
 body {
     /* Richer background with radial gradient for depth */
     background: radial-gradient(circle at center, #ef5350 0%, #b71c1c 40%, #5d0707 100%);
-    overflow: hidden;
-    /* Prevent scrolling if elements move out */
-    height: 100vh;
-    width: 100vw;
+    touch-action: none;
+    /* Prevent scrolling on mobile */
 }
 
 /* Glassmorphism Refined */
@@ -239,4 +247,77 @@ body {
     cursor: pointer;
     font-size: 2rem;
     line-height: 1;
+}
+
+/* Mobile Responsiveness Improvements */
+/* Ensure modals are on top */
+#message-modal,
+#qr-modal {
+    z-index: 9999 !important;
+}
+
+@media (max-width: 768px) {
+    /* ... existing content ... */
+
+    /* Ensure no horizontal scroll */
+    body {
+        position: fixed;
+        width: 100%;
+        overflow: hidden;
+    }
+
+    /* Adjust Glass Panel padding */
+    .glass-panel {
+        padding: 1.5rem;
+        max-width: 90%;
+        min-height: auto;
+    }
+
+    /* Adjust Font Sizes */
+    h1 {
+        font-size: 2.5rem !important;
+        /* Tailwind override or manual */
+    }
+
+    .text-5xl {
+        font-size: 2.5rem;
+    }
+
+    .text-7xl {
+        font-size: 3rem;
+    }
+
+    /* Game Container Sizing */
+    #game-container {
+        width: 100%;
+        max-width: 350px;
+    }
+
+    /* Wheel Sizing */
+    .wheel-container {
+        width: 200px;
+        height: 200px;
+    }
+
+    /* Button text sizing */
+    .btn-primary {
+        font-size: 1rem !important;
+        padding: 0.5rem 1.5rem !important;
+    }
+
+    /* Modal Sizing */
+    #qr-modal .glass-panel,
+    #message-modal .glass-panel {
+        width: 95%;
+        padding: 1rem;
+    }
+
+    #qr-modal img {
+        max-height: 50vh;
+    }
+
+    /* Ensure content doesn't overflow vertically */
+    .flex-col {
+        justify-content: center;
+    }
 }

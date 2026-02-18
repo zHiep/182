@@ -413,7 +413,7 @@ function initFallingEffects() {
         // Randomize
         const sizeValue = Math.random() * 20 + 15; // Size in px
         const size = sizeValue + 'px';
-        const left = Math.random() * 100 + 'vw';
+        const left = Math.random() * 90 + 5 + 'vw'; /* Limit to 90vw to avoid overflow */
         const durationValue = Math.random() * 5 + 5; // 5-10s
         const duration = durationValue + 's';
 
