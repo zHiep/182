@@ -101,26 +101,30 @@
                 <div class="wheel-container relative w-64 h-64 mb-4">
                     <div id="wheel"
                         class="w-full h-full rounded-full border-4 border-tetGold bg-white/10 relative overflow-hidden transition-transform duration-[4000ms] ease-[cubic-bezier(0.25,0.1,0.25,1)]">
-                        <!-- Wheel segments (simplified with CSS conic gradient) -->
+                        <!-- Wheel segments (Redistributed: Red/Orange/Green bigger, Blue tiny) -->
                         <div class="absolute inset-0 rounded-full" style="background: conic-gradient(
-                            #d32f2f 0deg 90deg, 
-                            #ff9800 90deg 180deg, 
-                            #4caf50 180deg 270deg, 
-                            #2196f3 270deg 360deg
+                            #d32f2f 0deg 110deg, 
+                            #ff9800 110deg 220deg, 
+                            #4caf50 220deg 330deg, 
+                            #2196f3 330deg 360deg
                         );"></div>
-                        <!-- Labels -->
+                        <!-- Labels (Repositioned based on new centers) -->
+                        <!-- 500k (Center ~55deg) -->
                         <div
-                            class="absolute top-[20%] left-[60%] text-white font-bold transform -translate-x-1/2 rotate-45">
+                            class="absolute top-[25%] left-[65%] text-white font-bold transform -translate-x-1/2 rotate-[55deg]">
                             500k</div>
+                        <!-- 200k (Center ~165deg) -->
                         <div
-                            class="absolute top-[60%] left-[70%] text-white font-bold transform -translate-x-1/2 rotate-[135deg]">
+                            class="absolute top-[75%] left-[65%] text-white font-bold transform -translate-x-1/2 rotate-[165deg]">
                             200k</div>
+                        <!-- 100k (Center ~275deg) -->
                         <div
-                            class="absolute top-[70%] left-[25%] text-white font-bold transform -translate-x-1/2 rotate-[225deg]">
+                            class="absolute top-[60%] left-[20%] text-white font-bold transform -translate-x-1/2 rotate-[275deg]">
                             100k</div>
+                        <!-- Miss (Center ~345deg) -->
                         <div
-                            class="absolute top-[25%] left-[20%] text-white font-bold transform -translate-x-1/2 rotate-[315deg] text-xs w-20 text-center">
-                            Chúc may mắn</div>
+                            class="absolute top-[18%] left-[42%] text-white font-bold transform -translate-x-1/2 rotate-[345deg] text-[0.6rem] w-12 text-center origin-bottom">
+                            Tạch</div>
                     </div>
                     <!-- Spinner Arrow -->
                     <div

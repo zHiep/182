@@ -245,9 +245,21 @@ document.getElementById('btn-spin').addEventListener('click', () => {
     // We need 270-360 to be at top.
     // Let's just spin a huge amount + random offset ensuring it lands on the "Blue" zone.
 
-    // Actually, simple troll: Just rotate a fixed amount that looks random but is hardcoded to fail.
-    const baseSpins = 360 * 10; // 10 spins
-    const targetDegree = 45 + baseSpins; // 45 degrees lands somewhere specific
+    // Troll Spin Logic
+    // We want to land on "Tạch" (Blue zone: 330deg - 360deg).
+    // To land a specific degree at the TOP (pointer at 0deg relative to wheel container), 
+    // we need to rotate the wheel counter-clockwise or just calculate offset.
+    // CSS Rotate is Clockwise.
+    // If we want 345deg (tạch center) at Top (0deg):
+    // The wheel needs to rotate such that 345 becomes 0.
+    // That means rotating by (360 - 345) = 15 degrees.
+    // Range for Tạch: 330-360.
+    // Target Rotation Range: (360-360) to (360-330) => 0deg to 30deg.
+    // Let's pick a safe spot: 10deg to 20deg.
+
+    const baseSpins = 360 * 10; // 10 full spins
+    const randomOffset = 5 + Math.random() * 20; // Land between 5 and 25 degrees
+    const targetDegree = baseSpins + randomOffset;
 
     wheel.style.transform = `rotate(${targetDegree}deg)`;
 
