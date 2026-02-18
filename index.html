@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="vi">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lì Xì Bất Tử 2026 - Chúc Mừng Năm Mới</title>
+    <!-- Tailwind CSS (via CDN for simplicity without build step) -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        tetRed: '#d32f2f',
+                        tetGold: '#ffd700',
+                    },
+                    animation: {
+                        'spin-slow': 'spin 3s linear infinite',
+                        'bounce-slow': 'bounce 3s infinite',
+                    }
+                }
+            }
+        }
+    </script>
+    <!-- Canvas Confetti -->
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="style.css">
+    <!-- Google Fonts -->
+    <link
+        href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&family=Roboto:wght@400;700&display=swap"
+        rel="stylesheet">
+</head>
+
+<body class="bg-tetRed overflow-hidden h-screen w-screen relative font-roboto text-white select-none">
+
+    <!-- Background Elements (Apricot Blossoms / Firework Canvas placeholder) -->
+    <div id="bg-effects" class="absolute inset-0 pointer-events-none z-0">
+        <!-- Flowers / Decor (CSS generated or SVG) -->
+        <div class="flower absolute top-10 left-10 w-8 h-8 bg-tetGold rounded-full opacity-50 animate-pulse"></div>
+        <div class="flower absolute top-1/2 right-20 w-6 h-6 bg-tetGold rounded-full opacity-40 animate-bounce"></div>
+        <div class="flower absolute bottom-20 left-1/3 w-10 h-10 bg-tetGold rounded-full opacity-60 animate-spin-slow">
+        </div>
+        <!-- More decor can be added via JS or CSS -->
+    </div>
+
+    <!-- Main Container -->
+    <div class="relative z-10 flex flex-col items-center justify-center h-full w-full p-4">
+
+        <!-- Header -->
+        <header class="text-center mb-8 animate-fade-in-down">
+            <h1 class="text-5xl md:text-7xl font-bold text-tetGold drop-shadow-lg font-['Dancing_Script']">
+                Xuân 2026
+            </h1>
+            <p class="text-xl md:text-2xl mt-2 text-white/90">Lì Xì Bất Tử - Thử Thách Cực Vui</p>
+        </header>
+
+        <!-- Game Container (Glassmorphism) -->
+        <div id="game-container"
+            class="glass-panel p-8 rounded-2xl shadow-2xl w-full max-w-md text-center transition-all duration-500 min-h-[300px] flex flex-col items-center justify-center">
+
+            <!-- Phase 1: The Dodge Button -->
+            <div id="phase-start" class="w-full flex flex-col items-center">
+                <p class="mb-6 text-lg">Bạn có muốn nhận lì xì không?</p>
+                <!-- Container for the button to move within, relative to screen or container? 
+                     For best troll effect, button moves in viewport but let's keep it manageable first. -->
+                <button id="btn-lixi"
+                    class="btn-primary px-8 py-3 rounded-full text-xl font-bold shadow-lg transition-all duration-100 ease-out">
+                    Nhận Lì Xì Ngay!
+                </button>
+                <p class="text-sm mt-4 text-gray-200 italic">(Đừng để nó chạy thoát!)</p>
+            </div>
+
+            <!-- Phase 2: Fake Loading -->
+            <div id="phase-loading" class="hidden w-full">
+                <p class="mb-4 text-lg font-bold">Đang kết nối tới ví của "Sếp"...</p>
+                <div class="w-full bg-white/20 rounded-full h-4 overflow-hidden border border-white/30">
+                    <div id="progress-bar"
+                        class="bg-tetGold h-full w-0 transition-all duration-300 ease-linear shadow-[0_0_10px_#ffd700]">
+                    </div>
+                </div>
+                <p id="loading-text" class="mt-2 text-sm">0%</p>
+            </div>
+
+            <!-- Phase 3: Infinite Confirm (Custom Modal style inside container) -->
+            <div id="phase-confirm" class="hidden w-full">
+                <h3 class="text-2xl font-bold mb-4 text-tetGold">Xác Nhận</h3>
+                <p id="confirm-text" class="mb-6 text-lg">Bạn chắc chắn muốn nhận tiền chứ?</p>
+                <div class="flex justify-center gap-4">
+                    <button id="btn-confirm-yes" class="btn-primary px-6 py-2 rounded-lg font-bold">Có</button>
+                    <button id="btn-confirm-no"
+                        class="bg-gray-500 hover:bg-gray-600 text-white px-6 py-2 rounded-lg font-bold transition-all">Không</button>
+                </div>
+            </div>
+
+            <!-- Phase 4: Fake Wheel -->
+            <div id="phase-wheel" class="hidden w-full relative flex flex-col items-center">
+                <h3 class="text-xl font-bold mb-4">Vòng Quay Nhân Phẩm</h3>
+                <div class="wheel-container relative w-64 h-64 mb-4">
+                    <div id="wheel"
+                        class="w-full h-full rounded-full border-4 border-tetGold bg-white/10 relative overflow-hidden transition-transform duration-[4000ms] ease-[cubic-bezier(0.25,0.1,0.25,1)]">
+                        <!-- Wheel segments (simplified with CSS conic gradient) -->
+                        <div class="absolute inset-0 rounded-full" style="background: conic-gradient(
+                            #d32f2f 0deg 90deg, 
+                            #ff9800 90deg 180deg, 
+                            #4caf50 180deg 270deg, 
+                            #2196f3 270deg 360deg
+                        );"></div>
+                        <!-- Labels -->
+                        <div
+                            class="absolute top-[20%] left-[60%] text-white font-bold transform -translate-x-1/2 rotate-45">
+                            500k</div>
+                        <div
+                            class="absolute top-[60%] left-[70%] text-white font-bold transform -translate-x-1/2 rotate-[135deg]">
+                            200k</div>
+                        <div
+                            class="absolute top-[70%] left-[25%] text-white font-bold transform -translate-x-1/2 rotate-[225deg]">
+                            100k</div>
+                        <div
+                            class="absolute top-[25%] left-[20%] text-white font-bold transform -translate-x-1/2 rotate-[315deg] text-xs w-20 text-center">
+                            Chúc may mắn</div>
+                    </div>
+                    <!-- Spinner Arrow -->
+                    <div
+                        class="absolute top-0 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-0 h-0 border-l-[10px] border-l-transparent border-r-[10px] border-r-transparent border-t-[20px] border-t-white z-20 drop-shadow-md">
+                    </div>
+                </div>
+                <button id="btn-spin" class="btn-primary px-8 py-2 rounded-full font-bold shadow-lg">Quay Ngay</button>
+            </div>
+
+            <!-- Phase 5: Reward -->
+            <div id="phase-reward" class="hidden w-full flex flex-col items-center animate-zoom-in">
+                <img src="https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExbmNneXF6Ynd5YnZ5Ync0Ync1Ync2Ync3Ync4Ync5/3o7TKSjRrfIPjeiVyM/giphy.gif"
+                    alt="Funny Cat"
+                    class="w-32 h-32 rounded-full mb-4 object-cover border-4 border-tetGold shadow-lg hidden"
+                    id="reward-meme"> <!-- Placeholder meme -->
+                <div
+                    class="lucky-money-envelope bg-red-600 w-48 h-64 relative rounded-lg shadow-2xl mb-4 cursor-pointer hover:scale-105 transition-transform flex items-center justify-center border-2 border-tetGold">
+                    <span class="text-4xl">🧧</span>
+                    <p class="absolute bottom-4 text-tetGold font-['Dancing_Script'] text-xl">Mở ngay</p>
+                </div>
+                <div id="final-message" class="hidden text-center">
+                    <h3 class="text-2xl font-bold text-tetGold mb-2">Chúc Mừng Năm Mới!</h3>
+                    <p class="text-white mb-4">"Tiền thì không có, nhưng tình cảm thì dạt dào! <br> Chúc bạn 2026 rực
+                        rỡ!"</p>
+                    <button id="btn-transfer"
+                        class="btn-primary px-6 py-3 rounded-full font-bold shadow-lg inline-block text-white no-underline hover:text-white">
+                        QR Chuyển Khoản <br><span class="text-xs font-normal opacity-80">(Mừng tuổi lại tôi đi!)</span>
+                    </button>
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+
+    <!-- QR Modal -->
+    <div id="qr-modal" class="fixed inset-0 z-50 items-center justify-center bg-black/80 hidden">
+        <div
+            class="glass-panel p-6 rounded-2xl max-w-sm w-[90%] flex flex-col items-center relative animate-zoom-in relative">
+            <button id="close-qr"
+                class="absolute top-2 right-2 text-white text-2xl font-bold hover:text-tetGold">&times;</button>
+            <h3 class="text-2xl font-bold text-tetGold mb-4 font-['Dancing_Script']">Mừng Tuổi Tớ Đi!</h3>
+            <div class="bg-white p-2 rounded-lg">
+                <img src="QR_Techcombank.jpg" alt="QR Techcombank"
+                    class="w-full h-auto rounded-md max-h-[60vh] object-contain">
+            </div>
+            <p class="mt-4 text-center text-sm text-gray-200">Quét mã để tình cảm đi lên nào! <br> Chúc mừng năm mới!
+            </p>
+        </div>
+    </div>
+
+    <!-- Generic Message Modal -->
+    <div id="message-modal" class="fixed inset-0 z-50 items-center justify-center bg-black/80 hidden">
+        <div class="glass-panel p-6 rounded-2xl max-w-sm w-[90%] flex flex-col items-center relative animate-zoom-in">
+            <h3 id="msg-title" class="text-2xl font-bold text-tetGold mb-4 font-['Dancing_Script']">Thông Báo</h3>
+            <p id="msg-content" class="text-center text-lg mb-6">Nội dung thông báo...</p>
+            <button id="btn-msg-ok" class="btn-primary px-6 py-2 rounded-lg font-bold">Đã Hiểu</button>
+        </div>
+    </div>
+
+    <!-- Audio Elements -->
+    <!-- Note: Browsers block autoplay. We need interaction to play. -->
+    <audio id="sound-bg" loop>
+        <source src="#" type="audio/mpeg">
+    </audio>
+    <audio id="sound-troll">
+        <source src="#" type="audio/mpeg">
+    </audio>
+    <audio id="sound-win">
+        <source src="#" type="audio/mpeg">
+    </audio>
+
+    <script src="script.js"></script>
+</body>
+
+</html>
