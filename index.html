@@ -108,23 +108,31 @@
                             #4caf50 220deg 330deg, 
                             #2196f3 330deg 360deg
                         );"></div>
-                        <!-- Labels (Repositioned based on new centers) -->
-                        <!-- 500k (Center ~55deg) -->
-                        <div
-                            class="absolute top-[25%] left-[65%] text-white font-bold transform -translate-x-1/2 rotate-[55deg]">
-                            500k</div>
-                        <!-- 200k (Center ~165deg) -->
-                        <div
-                            class="absolute top-[75%] left-[65%] text-white font-bold transform -translate-x-1/2 rotate-[165deg]">
-                            200k</div>
-                        <!-- 100k (Center ~275deg) -->
-                        <div
-                            class="absolute top-[60%] left-[20%] text-white font-bold transform -translate-x-1/2 rotate-[275deg]">
-                            100k</div>
-                        <!-- Miss (Center ~345deg) -->
-                        <div
-                            class="absolute top-[18%] left-[42%] text-white font-bold transform -translate-x-1/2 rotate-[345deg] text-[0.6rem] w-12 text-center origin-bottom">
-                            Tạch</div>
+                        <!-- Labels (Centered using transform from 50% 50%) -->
+
+                        <!-- 500k (55deg) -->
+                        <div class="absolute top-1/2 left-1/2 font-bold text-white origin-center whitespace-nowrap"
+                            style="transform: translate(-50%, -50%) rotate(55deg) translateY(-70px);">
+                            500k
+                        </div>
+
+                        <!-- 200k (165deg) -->
+                        <div class="absolute top-1/2 left-1/2 font-bold text-white origin-center whitespace-nowrap"
+                            style="transform: translate(-50%, -50%) rotate(165deg) translateY(-70px);">
+                            200k
+                        </div>
+
+                        <!-- 100k (275deg) -->
+                        <div class="absolute top-1/2 left-1/2 font-bold text-white origin-center whitespace-nowrap"
+                            style="transform: translate(-50%, -50%) rotate(275deg) translateY(-70px);">
+                            100k
+                        </div>
+
+                        <!-- Tạch (345deg) -->
+                        <div class="absolute top-1/2 left-1/2 font-bold text-white origin-center whitespace-nowrap text-[0.6rem]"
+                            style="transform: translate(-50%, -50%) rotate(345deg) translateY(-85px);">
+                            Tạch
+                        </div>
                     </div>
                     <!-- Spinner Arrow -->
                     <div
