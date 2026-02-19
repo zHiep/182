@@ -35,6 +35,18 @@
 
 <body class="bg-tetRed overflow-hidden h-screen w-screen relative font-roboto text-white select-none">
 
+    <!-- Start Overlay (To force audio interaction) -->
+    <div id="start-overlay"
+        class="fixed inset-0 z-[10000] bg-black/95 flex flex-col items-center justify-center transition-opacity duration-500">
+        <h1 class="text-4xl md:text-6xl font-bold text-tetGold mb-8 font-['Dancing_Script'] animate-bounce">
+            🧧 Lì Xì 2026 🧧
+        </h1>
+        <button id="btn-start-game"
+            class="px-8 py-4 bg-tetGold text-red-600 font-bold text-xl rounded-full shadow-[0_0_20px_rgba(255,215,0,0.6)] hover:scale-105 transition-transform animate-pulse">
+            Nhấn Để Bắt Đầu
+        </button>
+    </div>
+
     <!-- Background Elements (Apricot Blossoms / Firework Canvas placeholder) -->
     <div id="bg-effects" class="fixed inset-0 pointer-events-none z-0 overflow-hidden">
         <!-- Flowers / Decor (CSS generated or SVG) -->

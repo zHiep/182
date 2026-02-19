@@ -16,38 +16,41 @@ let dodgeCount = 0;
 const maxDodges = 8;
 let hasFailedLoadingOnce = false;
 
-// Audio Context for generated sounds (No 404s!)
-const AudioContext = window.AudioContext || window.webkitAudioContext;
-const audioCtx = new AudioContext();
-
-// Background Music
+// --- Setup Audio & Start Game ---
+const startOverlay = document.getElementById('start-overlay');
+const btnStartGame = document.getElementById('btn-start-game');
 const bgMusic = document.getElementById('sound-bg');
-if (bgMusic) {
-    bgMusic.volume = 0.3; // Low volume
+const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
 
-    // Attempt autoplay immediately
-    bgMusic.play().catch(() => {
-        // Fallback: Play on first interaction with ANYTHING
-        const playOnInteraction = () => {
-            bgMusic.play();
-            document.removeEventListener('click', playOnInteraction);
-            document.removeEventListener('touchstart', playOnInteraction);
-            document.removeEventListener('keydown', playOnInteraction);
-        };
-        document.addEventListener('click', playOnInteraction);
-        document.addEventListener('touchstart', playOnInteraction);
-        document.addEventListener('keydown', playOnInteraction);
+if (btnStartGame) {
+    btnStartGame.addEventListener('click', async () => {
+        // Resume AudioContext (important for iOS/Safari/Chrome)
+        if (audioCtx.state === 'suspended') {
+            await audioCtx.resume();
+        }
+
+        // Play Background Music
+        if (bgMusic) {
+            bgMusic.volume = 0.1;
+            bgMusic.play().catch(e => console.warn("Music block:", e));
+        }
+
+        // Hide Overlay
+        startOverlay.classList.add('opacity-0');
+        startOverlay.classList.add('pointer-events-none');
+        setTimeout(() => {
+            startOverlay.style.display = 'none';
+        }, 500);
+
+        // Play a "start" sound
+        playSound('win');
     });
 }
 
 function playSound(type) {
+    // If context suspended, resume (should be redundant if start button clicked, but safe)
     if (audioCtx.state === 'suspended') {
         audioCtx.resume();
-    }
-
-    // Attempt to play background music on first interaction
-    if (bgMusic && bgMusic.paused) {
-        bgMusic.play().catch(e => console.log("Audio autoplay blocked until interaction"));
     }
 
     const osc = audioCtx.createOscillator();
