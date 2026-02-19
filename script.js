@@ -20,10 +20,36 @@ let hasFailedLoadingOnce = false;
 const AudioContext = window.AudioContext || window.webkitAudioContext;
 const audioCtx = new AudioContext();
 
+// Background Music
+const bgMusic = document.getElementById('sound-bg');
+if (bgMusic) {
+    bgMusic.volume = 0.3; // Low volume
+
+    // Attempt autoplay immediately
+    bgMusic.play().catch(() => {
+        // Fallback: Play on first interaction with ANYTHING
+        const playOnInteraction = () => {
+            bgMusic.play();
+            document.removeEventListener('click', playOnInteraction);
+            document.removeEventListener('touchstart', playOnInteraction);
+            document.removeEventListener('keydown', playOnInteraction);
+        };
+        document.addEventListener('click', playOnInteraction);
+        document.addEventListener('touchstart', playOnInteraction);
+        document.addEventListener('keydown', playOnInteraction);
+    });
+}
+
 function playSound(type) {
     if (audioCtx.state === 'suspended') {
         audioCtx.resume();
     }
+
+    // Attempt to play background music on first interaction
+    if (bgMusic && bgMusic.paused) {
+        bgMusic.play().catch(e => console.log("Audio autoplay blocked until interaction"));
+    }
+
     const osc = audioCtx.createOscillator();
     const gainNode = audioCtx.createGain();
 
